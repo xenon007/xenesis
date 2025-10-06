@@ -54,4 +54,4 @@ License 📝
 -------
 
 This repository is under [GNU General Public License v3.0](https://github.com/xenon007/xenesis/blob/main/LICENSE).  
-[edoardottt.com](https://edoardottt.com) to contact me.
+[x07.it](https://x07.it) to contact me.

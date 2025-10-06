@@ -148,26 +148,21 @@ func x07ComponentTemplate() Template {
 		},
 		MainFileContent: func(projectName, modulePath string) string {
 			packageName := SanitizePackageName(projectName)
-			return fmt.Sprintf(`package main
-
-import (
-        "context"
-        "log"
-
-        "%s/internal/components/%s"
-)
-
-func main() {
-        ctx := context.Background()
-
-        component := %s.New()
-        if err := component.Bootstrap(ctx); err != nil {
-                log.Fatalf("component bootstrap failed: %v", err)
-        }
-
-        log.Println("component is up and running")
-}
-`, modulePath, packageName, packageName)
+			return fmt.Sprintf("package main\n\n"+
+				"import (\n"+
+				"\t\"context\"\n"+
+				"\t\"log\"\n\n"+
+				"\t\"%s/internal/components/%s\"\n"+
+				")\n\n"+
+				"func main() {\n"+
+				"\tctx := context.Background()\n\n"+
+				"\tcomponent := %s.New()\n"+
+				"\tif err := component.Bootstrap(ctx); err != nil {\n"+
+				"\t\tlog.Fatalf(\"component bootstrap failed: %%v\", err)\n"+
+				"\t}\n\n"+
+				"\tlog.Println(\"component is up and running\")\n"+
+				"}\n",
+				modulePath, packageName, packageName)
 		},
 		ExtraFiles: func(projectName, modulePath string) []File {
 			packageName := SanitizePackageName(projectName)
@@ -259,24 +254,19 @@ func threeXfaTemplate() Template {
 			return filepath.Join("cmd", fmt.Sprintf("%s.go", projectName))
 		},
 		MainFileContent: func(projectName, modulePath string) string {
-			return fmt.Sprintf(`package main
-
-import (
-        "log"
-
-        _3xfa "%s/plugins/3xfa"
-)
-
-func main() {
-        plugin := _3xfa.New()
-
-        if err := plugin.Register(); err != nil {
-                log.Fatalf("3XFA plugin registration failed: %v", err)
-        }
-
-        log.Println("3XFA plugin registered successfully")
-}
-`, modulePath)
+			return fmt.Sprintf("package main\n\n"+
+				"import (\n"+
+				"\t\"log\"\n\n"+
+				"\t_3xfa \"%s/plugins/3xfa\"\n"+
+				")\n\n"+
+				"func main() {\n"+
+				"\tplugin := _3xfa.New()\n\n"+
+				"\tif err := plugin.Register(); err != nil {\n"+
+				"\t\tlog.Fatalf(\"3XFA plugin registration failed: %%v\", err)\n"+
+				"\t}\n\n"+
+				"\tlog.Println(\"3XFA plugin registered successfully\")\n"+
+				"}\n",
+				modulePath)
 		},
 		ExtraFiles: func(projectName, modulePath string) []File {
 			pluginPath := filepath.Join("plugins", "3xfa", "plugin.go")
